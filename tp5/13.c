@@ -1,5 +1,4 @@
 #include<stdio.h>
-#include<math.h>
 
 int main(){
     int decimal, auxiliar, binario = 0, resto = 0, peso = 1;
