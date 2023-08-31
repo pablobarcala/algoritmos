@@ -2,18 +2,18 @@
 #include<math.h>
 
 int main(){
-    int binario, ultimo, decimal = 0, i = 0, auxiliar;
+    int decimal, auxiliar, binario = 0, resto = 0, peso = 1;
 
     printf("Ingrese un numero entero positivo:\n");
-    scanf("%d", &binario);
+    scanf("%d", &decimal);
 
-    auxiliar = binario;
+    auxiliar = decimal;
 
-    while(binario > 0){
-        ultimo = binario % 10;
-        decimal += ultimo * pow(2, i);
-        binario /= 10;
-        i++;
+    while(decimal > 0){
+        resto = decimal % 2;
+        decimal /= 2;
+        binario += resto * peso;
+        peso *= 10;
     }
 
     printf("El numero decimal %d es %d en binario", auxiliar, binario);
