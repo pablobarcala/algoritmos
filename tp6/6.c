@@ -1,6 +1,6 @@
 #include<stdio.h>
 
-int cargarVect(int N, int v[]);
+void cargarVect(int N, int v[]);
 
 int main(){
     int N;
@@ -18,7 +18,7 @@ int main(){
     return 0;
 }
 
-int cargarVect(int N, int v[]) {
+void cargarVect(int N, int v[]) {
     int K, adicional = 1, i;
 
     printf("Ingrese un valor entero: ");

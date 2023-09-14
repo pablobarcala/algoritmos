@@ -1,6 +1,6 @@
 #include<stdio.h>
 
-int cargarVect(int N, int v[]);
+void cargarVect(int N, int v[]);
 
 int main(){
     int N, C, NUMERO = 1;
@@ -23,7 +23,7 @@ int main(){
     return 0;
 }
 
-int cargarVect(int N, int v[]){
+void cargarVect(int N, int v[]){
     int i;
     for(i = 0; i < N; i++){
         printf("Ingrese un numero: ");

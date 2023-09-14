@@ -1,6 +1,6 @@
 #include<stdio.h>
 
-int cargarVect(int N, int v[]);
+void cargarVect(int N, int v[]);
 
 int main(){
     int N;
@@ -18,7 +18,7 @@ int main(){
     return 0;
 }
 
-int cargarVect(int N, int v[]){
+void cargarVect(int N, int v[]){
     int adicional = 0, i;
     for(i = N-1; i >= 0; i--){
         v[i] = N + adicional;
