@@ -53,3 +53,7 @@ char cad1[10] = "Clase";
 
 // Necesaria para obtener longitud logica de un string (strlen)
 // Ver mas funciones
+
+
+// ----- Para tomar dos palabras en una variable por ej nombre, al ingresar "Pablo Barcala" se va a guardar "Pablo"
+// Para eso usar gets(nombre);
