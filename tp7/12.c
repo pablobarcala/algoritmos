@@ -39,18 +39,25 @@ void convertir(int N, char palabras[][20]){
 
     // Se llega hasta N - 1 por las posiciones de las palabras en el arreglo
     for(int i = 0; i < N - 1; i++){
-        // Llega hasta N - 1 - i porque se compara la palabra en la que se encuentra 
-        // con la posicion i + 1, entonces hay que llegar a 1 antes
-        // entonces si i = 0 y N = 4 se van a comparar 
-        // las palabras 0 con 1, la 1 con 2, la 2 con la 3 y se termina
-        // si i = 1 se comparan las palabras 0 con 1, la 1 con 2 y se termina
-        // si i = 2 se comparan las palabras 0 con 1
-        for(int j = 0; j < N - i - 1; j++){
-            if(strcmp(palabras[j], palabras[j+1]) > 0){
+        // se toma la posicion de i + 1 para saber que palabra se va a comparar con las que faltan
+        // entonces si i = 0 y N = 4:
+        // j = 1, se comparan las palabras 0 con 1
+        // j = 2, se comparan las palabras 0 con 2
+        // j = 3, se comparan las palabras 0 con 3
+        // si i = 1:
+        // j = 2, se comparan las palabras 1 con 2
+        // j = 3, se comparan las palabras 1 con 3
+        // si i = 2:
+        // j = 3, se comparan las palabras 2 con 3
+
+        // VER PAGINA 16 DE UNIDAD 4 DE ARREGLOS
+
+        for(int j = i + 1; j < N; j++){
+            if(strcmp(palabras[i], palabras[j]) > 0){
                 char temporal[20];
-                strcpy(temporal, palabras[j]);
-                strcpy(palabras[j], palabras[j+1]);
-                strcpy(palabras[j+1], temporal);
+                strcpy(temporal, palabras[i]);
+                strcpy(palabras[i], palabras[j]);
+                strcpy(palabras[j], temporal);
             }
         }
     }
