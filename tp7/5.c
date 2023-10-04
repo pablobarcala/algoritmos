@@ -40,8 +40,8 @@ void convertir(char palabra[20], char palabraModificada[20]){
             palabraModificada[j] = palabra[i];
             j++;
         }
-        if(i == strlen(palabra)){
-            break;
-        }
     }
+
+    // Agrega caracter nulo al final de palabraModificada para evitar que tome mas caracteres
+    palabraModificada[j] = '\0';
 }
