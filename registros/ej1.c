@@ -35,6 +35,8 @@ int main(){
                 break;
             case 4:
                 ejecutar = 0;
+            default:
+                printf("Ingrese una opcion correcta");
         }
     } while(ejecutar == 1);
 
