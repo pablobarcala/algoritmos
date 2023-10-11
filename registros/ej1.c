@@ -11,13 +11,14 @@ typedef struct {
 void cargarAutos(int N, autos lista[]);
 void mostrarAutos(int N, autos lista[]);
 void ordenarAutos(int N, autos lista[]);
+void editarAuto(int N, autos lista[]);
 
 int main(){
     int opcion, N, ejecutar = 1;
     autos lista[10];
 
     do {
-        printf("\nSeleccione una de las opciones:\n1. Cargar autos\n2. Ver autos\n3. Ordenar alfabeticamente\n4. Salir\n");
+        printf("\nSeleccione una de las opciones:\n1. Cargar autos\n2. Ver autos\n3. Ordenar alfabeticamente\n4. Editar un auto\n5. Salir\n");
         scanf("%d", &opcion);
 
         switch(opcion){
@@ -34,9 +35,15 @@ int main(){
                 mostrarAutos(N, lista);
                 break;
             case 4:
+                editarAuto(N, lista);
+                mostrarAutos(N, lista);
+                break;
+            case 5:
                 ejecutar = 0;
+                break;
             default:
                 printf("Ingrese una opcion correcta");
+                break;
         }
     } while(ejecutar == 1);
 
@@ -46,7 +53,6 @@ int main(){
 void cargarAutos(int N, autos lista[]){
     int i;
 
-    // ----- VER CON ESTE CODIGO POR QUE NO PUEDO CARGAR LA MARCA
     for(i = 0; i < N; i++){
         printf("Auto %d:\n", i);
         printf("Ingrese la marca: ");
@@ -58,16 +64,6 @@ void cargarAutos(int N, autos lista[]){
         printf("Ingrese el anio: ");
         scanf("%d", &lista[i].anio);
     }
-
-    // for(i = 0; i < N; i++){
-    //     printf("\nAuto %d:\n", i + 1);
-    //     printf("Ingrese la marca: ");
-    //     scanf("%s", lista[i].marca);
-    //     printf("Ingrese el modelo: ");
-    //     scanf("%s", lista[i].modelo);
-    //     printf("Ingrese el anio: ");
-    //     scanf("%d", &lista[i].anio);
-    // }
 }
 
 void mostrarAutos(int N, autos lista[]){
@@ -116,5 +112,32 @@ void ordenarAutos(int N, autos lista[]){
                 break;
         }
     } while (ejecutar == 1);
-    
+}
+
+void editarAuto(int N, autos lista[]){
+    int opcion, ejecutar = 1;
+    do {
+        printf("\nSelecciona el auto a editar:\n");
+        for(int i = 0; i < N; i++){
+            printf("%d. %s %s %d\n", i, lista[i].marca, lista[i].modelo, lista[i].anio);
+        }
+        scanf("%d", &opcion);
+
+        if(opcion < N){
+            ejecutar = 0;
+        }
+    } while(ejecutar == 1);
+
+    for(int i = 0; i < N; i++){
+        if(i == opcion){
+            printf("\nIngrese nueva marca: ");
+            fflush(stdin);
+            fgets(lista[opcion].marca, sizeof(lista[opcion].marca), stdin);
+            printf("\nIngrese nuevo modelo: ");
+            fflush(stdin);
+            fgets(lista[opcion].modelo, sizeof(lista[opcion].modelo), stdin);
+            printf("\nIngrese nuevo anio: ");
+            scanf("%d", &lista[opcion].anio);
+        }
+    }
 }
