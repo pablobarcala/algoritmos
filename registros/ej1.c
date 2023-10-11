@@ -47,25 +47,27 @@ void cargarAutos(int N, autos lista[]){
     int i;
 
     // ----- VER CON ESTE CODIGO POR QUE NO PUEDO CARGAR LA MARCA
-    // for(i = 0; i < N; i++){
-    //     printf("Auto %d:\n", i);
-    //     printf("Ingrese la marca: ");
-    //     fgets(lista[i].marca, sizeof(lista[i].marca), stdin);
-    //     printf("Ingrese el modelo: ");
-    //     fgets(lista[i].modelo, sizeof(lista[i].modelo), stdin);
-    //     printf("Ingrese el anio: ");
-    //     scanf("%d", &lista[i].anio);
-    // }
-
     for(i = 0; i < N; i++){
-        printf("\nAuto %d:\n", i + 1);
+        printf("Auto %d:\n", i);
         printf("Ingrese la marca: ");
-        scanf("%s", lista[i].marca);
+        fflush(stdin);
+        fgets(lista[i].marca, sizeof(lista[i].marca), stdin);
         printf("Ingrese el modelo: ");
-        scanf("%s", lista[i].modelo);
+        fflush(stdin);
+        fgets(lista[i].modelo, sizeof(lista[i].modelo), stdin);
         printf("Ingrese el anio: ");
         scanf("%d", &lista[i].anio);
     }
+
+    // for(i = 0; i < N; i++){
+    //     printf("\nAuto %d:\n", i + 1);
+    //     printf("Ingrese la marca: ");
+    //     scanf("%s", lista[i].marca);
+    //     printf("Ingrese el modelo: ");
+    //     scanf("%s", lista[i].modelo);
+    //     printf("Ingrese el anio: ");
+    //     scanf("%d", &lista[i].anio);
+    // }
 }
 
 void mostrarAutos(int N, autos lista[]){
