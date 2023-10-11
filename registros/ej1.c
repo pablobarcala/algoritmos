@@ -78,22 +78,41 @@ void mostrarAutos(int N, autos lista[]){
 
 void ordenarAutos(int N, autos lista[]){
     autos temp;
-    int i, j;
-    for(i = 0; i < N; i++){
-        for(j = i + 1; j < N; j++){
-            // Primero ordena por marca
-            if(strcmp(lista[i].marca, lista[j].marca) > 0){
-                temp = lista[i];
-                lista[i] = lista[j];
-                lista[j] = temp;
-            }
-
-            // Despues ordena por modelo
-            if(strcmp(lista[i].modelo, lista[j].modelo) > 0){
-                temp = lista[i];
-                lista[i] = lista[j];
-                lista[j] = temp;
-            }
+    int i, j, opcion, ejecutar = 1;
+    do{
+        printf("\nSeleccione una opcion:\n1. Ordenar por marca\n2. Ordenar por modelo\n");
+        scanf("%d", &opcion);
+        switch(opcion){
+            case 1:
+                for(i = 0; i < N; i++){
+                    for(j = i + 1; j < N; j++){
+                        // Ordena por marca
+                        if(strcmp(lista[i].marca, lista[j].marca) > 0){
+                            temp = lista[i];
+                            lista[i] = lista[j];
+                            lista[j] = temp;
+                        }
+                    }
+                }
+                ejecutar = 0;
+                break;
+            case 2:
+                for(i = 0; i < N; i++){
+                    for(j = i + 1; j < N; j++){
+                        // Ordena por modelo
+                        if(strcmp(lista[i].modelo, lista[j].modelo) > 0){
+                            temp = lista[i];
+                            lista[i] = lista[j];
+                            lista[j] = temp;
+                        }
+                    }
+                }
+                ejecutar = 0;
+                break;
+            default:
+                printf("Ingrese una opcion valida");
+                break;
         }
-    }
+    } while (ejecutar == 1);
+    
 }
