@@ -12,13 +12,14 @@ void cargarAutos(int N, autos lista[]);
 void mostrarAutos(int N, autos lista[]);
 void ordenarAutos(int N, autos lista[]);
 void editarAuto(int N, autos lista[]);
+void agregarAuto(int *N, autos lista[]);
 
 int main(){
     int opcion, N, ejecutar = 1;
     autos lista[10];
 
     do {
-        printf("\nSeleccione una de las opciones:\n1. Cargar autos\n2. Ver autos\n3. Ordenar alfabeticamente\n4. Editar un auto\n5. Salir\n");
+        printf("\nSeleccione una de las opciones:\n1. Cargar autos\n2. Ver autos\n3. Ordenar alfabeticamente\n4. Editar un auto\n5. Agregar nuevo auto\n6. Salir\n");
         scanf("%d", &opcion);
 
         switch(opcion){
@@ -39,6 +40,9 @@ int main(){
                 mostrarAutos(N, lista);
                 break;
             case 5:
+                agregarAuto(&N, lista);
+                break;
+            case 6:
                 ejecutar = 0;
                 break;
             default:
@@ -50,6 +54,7 @@ int main(){
     return 0;
 }
 
+// Funcion para cargar autos al inicio
 void cargarAutos(int N, autos lista[]){
     int i;
 
@@ -66,6 +71,7 @@ void cargarAutos(int N, autos lista[]){
     }
 }
 
+// Funcion para mostrar los autos guardados
 void mostrarAutos(int N, autos lista[]){
     int i;
     printf("AUTOS:\n");
@@ -74,6 +80,7 @@ void mostrarAutos(int N, autos lista[]){
     }
 }
 
+// Funcion para ordenar alfabéticamente los autos y guardarlos a la lista
 void ordenarAutos(int N, autos lista[]){
     autos temp;
     int i, j, opcion, ejecutar = 1;
@@ -114,6 +121,7 @@ void ordenarAutos(int N, autos lista[]){
     } while (ejecutar == 1);
 }
 
+// Funcion para poder editar un auto
 void editarAuto(int N, autos lista[]){
     int opcion, ejecutar = 1;
     do {
@@ -140,4 +148,18 @@ void editarAuto(int N, autos lista[]){
             scanf("%d", &lista[opcion].anio);
         }
     }
+}
+
+// Funcion para agregar un nuevo auto
+void agregarAuto(int *N, autos lista[]){
+    printf("Nuevo auto:\n");
+    printf("Ingrese la marca: ");
+    fflush(stdin);
+    fgets(lista[*N].marca, sizeof(lista[*N].marca), stdin);
+    printf("Ingrese el modelo: ");
+    fflush(stdin);
+    fgets(lista[*N].modelo, sizeof(lista[*N].modelo), stdin);
+    printf("Ingrese el anio: ");
+    scanf("%d", &lista[*N].anio);
+    (*N)++;
 }
