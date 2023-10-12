@@ -10,16 +10,18 @@ typedef struct {
 
 void cargarAutos(int N, autos lista[]);
 void mostrarAutos(int N, autos lista[]);
-void ordenarAutos(int N, autos lista[]);
+void opcionesOrdenar(int N, autos lista[]);
+void ordenarAutos(int N, autos lista[], int opcion);
 void editarAuto(int N, autos lista[]);
 void agregarAuto(int *N, autos lista[]);
+void eliminarAuto(int N, autos lista[]);
 
 int main(){
     int opcion, N, ejecutar = 1;
     autos lista[10];
 
     do {
-        printf("\nSeleccione una de las opciones:\n1. Cargar autos\n2. Ver autos\n3. Ordenar alfabeticamente\n4. Editar un auto\n5. Agregar nuevo auto\n6. Salir\n");
+        printf("\nSeleccione una de las opciones:\n1. Cargar autos\n2. Ver autos\n3. Ordenar autos\n4. Editar un auto\n5. Agregar nuevo auto\n6. Eliminar un auto\n7. Salir\n");
         scanf("%d", &opcion);
 
         switch(opcion){
@@ -32,7 +34,7 @@ int main(){
                 mostrarAutos(N, lista);            
                 break;
             case 3:
-                ordenarAutos(N, lista);
+                opcionesOrdenar(N, lista);
                 mostrarAutos(N, lista);
                 break;
             case 4:
@@ -43,6 +45,10 @@ int main(){
                 agregarAuto(&N, lista);
                 break;
             case 6:
+                eliminarAuto(N, lista);
+                N--;
+                break;
+            case 7:
                 ejecutar = 0;
                 break;
             default:
@@ -80,18 +86,31 @@ void mostrarAutos(int N, autos lista[]){
     }
 }
 
-// Funcion para ordenar alfabéticamente los autos y guardarlos a la lista
-void ordenarAutos(int N, autos lista[]){
+// Funcion para tomar la opcion a ordenar
+void opcionesOrdenar(int N, autos lista[]){
     autos temp;
     int i, j, opcion, ejecutar = 1;
     do{
-        printf("\nSeleccione una opcion:\n1. Ordenar por marca\n2. Ordenar por modelo\n");
+        printf("\nSeleccione una opcion:\n1. A - Z por marca\n2. A - Z por modelo\n3. Z - A por marca\n4. Z - A por modelo\n5. Mayor a menor anio\n6. Menor a mayor anio\n");
         scanf("%d", &opcion);
-        switch(opcion){
+        if(opcion <= 6){
+            ordenarAutos(N, lista, opcion);
+            ejecutar = 0;
+        } else {
+            printf("Ingrese una opcion valida");
+        }
+    } while (ejecutar == 1);
+}
+
+// Funcion para ordenar autos segun la opcion elegida
+void ordenarAutos(int N, autos lista[], int opcion){
+    autos temp;
+    int i, j;
+    switch(opcion){
             case 1:
                 for(i = 0; i < N; i++){
                     for(j = i + 1; j < N; j++){
-                        // Ordena por marca
+                        // Ordena A-Z por marca
                         if(strcmp(lista[i].marca, lista[j].marca) > 0){
                             temp = lista[i];
                             lista[i] = lista[j];
@@ -99,12 +118,11 @@ void ordenarAutos(int N, autos lista[]){
                         }
                     }
                 }
-                ejecutar = 0;
                 break;
             case 2:
                 for(i = 0; i < N; i++){
                     for(j = i + 1; j < N; j++){
-                        // Ordena por modelo
+                        // Ordena A-Z por modelo
                         if(strcmp(lista[i].modelo, lista[j].modelo) > 0){
                             temp = lista[i];
                             lista[i] = lista[j];
@@ -112,13 +130,58 @@ void ordenarAutos(int N, autos lista[]){
                         }
                     }
                 }
-                ejecutar = 0;
+                break;
+            case 3:
+                for(i = 0; i < N; i++){
+                    for(j = i + 1; j < N; j++){
+                        // Ordena Z-A por marca
+                        if(strcmp(lista[i].marca, lista[j].marca) < 0){
+                            temp = lista[i];
+                            lista[i] = lista[j];
+                            lista[j] = temp;
+                        }
+                    }
+                }
+                break;
+            case 4:
+                for(i = 0; i < N; i++){
+                    for(j = i + 1; j < N; j++){
+                        // Ordena Z-A por modelo
+                        if(strcmp(lista[i].modelo, lista[j].modelo) < 0){
+                            temp = lista[i];
+                            lista[i] = lista[j];
+                            lista[j] = temp;
+                        }
+                    }
+                }
+                break;
+            case 5:
+                for(i = 0; i < N; i++){
+                    for(j = i + 1; j < N; j++){
+                        // Ordena por año de mayor a menor
+                        if(lista[i].anio < lista[j].anio){
+                            temp = lista[i];
+                            lista[i] = lista[j];
+                            lista[j] = temp;
+                        }
+                    }
+                }
+                break;
+            case 6:
+                for(i = 0; i < N; i++){
+                    for(j = i + 1; j < N; j++){
+                        // Ordena por año de menor a mayor
+                        if(lista[i].anio > lista[j].anio){
+                            temp = lista[i];
+                            lista[i] = lista[j];
+                            lista[j] = temp;
+                        }
+                    }
+                }
                 break;
             default:
-                printf("Ingrese una opcion valida");
                 break;
         }
-    } while (ejecutar == 1);
 }
 
 // Funcion para poder editar un auto
@@ -162,4 +225,26 @@ void agregarAuto(int *N, autos lista[]){
     printf("Ingrese el anio: ");
     scanf("%d", &lista[*N].anio);
     (*N)++;
+}
+
+// Funcion para eliminar un auto
+void eliminarAuto(int N, autos lista[]){
+    int i, j, ejecutar = 1, opcion;
+
+    do {
+        printf("Seleccione el auto a eliminar:\n");
+        for(i = 0; i < N; i++){
+            printf("\n%d. %s %s %d", i, lista[i].marca, lista[i].modelo, lista[i].anio);
+        }
+        scanf("%d", &opcion);
+        if(opcion < N){
+            ejecutar = 0;
+        } else {
+            printf("Ingrese una opcion valida");
+        }
+    } while(ejecutar == 1);
+
+    for(j = opcion; j < N - 1; j++){
+        lista[j] = lista[j + 1];
+    }
 }
