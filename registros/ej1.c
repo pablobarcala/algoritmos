@@ -69,11 +69,11 @@ void cargarAutos(int N, autos lista[]){
         printf("Ingrese la marca: ");
         fflush(stdin);
         fgets(lista[i].marca, sizeof(lista[i].marca), stdin);
+        printf("Ingrese el anio: ");
+        scanf("%d", &lista[i].anio);
         printf("Ingrese el modelo: ");
         fflush(stdin);
         fgets(lista[i].modelo, sizeof(lista[i].modelo), stdin);
-        printf("Ingrese el anio: ");
-        scanf("%d", &lista[i].anio);
     }
 }
 
@@ -204,11 +204,11 @@ void editarAuto(int N, autos lista[]){
             printf("\nIngrese nueva marca: ");
             fflush(stdin);
             fgets(lista[opcion].marca, sizeof(lista[opcion].marca), stdin);
+            printf("\nIngrese nuevo anio: ");
+            scanf("%d", &lista[opcion].anio);
             printf("\nIngrese nuevo modelo: ");
             fflush(stdin);
             fgets(lista[opcion].modelo, sizeof(lista[opcion].modelo), stdin);
-            printf("\nIngrese nuevo anio: ");
-            scanf("%d", &lista[opcion].anio);
         }
     }
 }
@@ -219,11 +219,11 @@ void agregarAuto(int *N, autos lista[]){
     printf("Ingrese la marca: ");
     fflush(stdin);
     fgets(lista[*N].marca, sizeof(lista[*N].marca), stdin);
+    printf("Ingrese el anio: ");
+    scanf("%d", &lista[*N].anio);
     printf("Ingrese el modelo: ");
     fflush(stdin);
     fgets(lista[*N].modelo, sizeof(lista[*N].modelo), stdin);
-    printf("Ingrese el anio: ");
-    scanf("%d", &lista[*N].anio);
     (*N)++;
 }
 

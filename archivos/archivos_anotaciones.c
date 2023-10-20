@@ -84,3 +84,38 @@
     // Leer en disco
     fread(&var, size, n, FILE *);
 */
+
+// ------------------------ EJERCICIO DE AUTOS CON ARCHIVO
+
+/*
+    int main(){
+        autos a;
+        FILE *arc;
+        arc = fopen("C:\\progr\datos.dat", "rb+"); => ------------ RUTA DEL ARCHIVO (rb+ read binario)
+        if(arc == NULL) {
+            arc = fopen("C:\\progr\datos.dat", "wb+"); => ------- (wb+ crea binario, si no existe el archivo) 
+        }
+
+        printf("Ingrese los datos: \n");
+        printf("Ingrese la marca: ");
+        gets(a.marca);
+        printf("Ingrese el anio del auto: ");
+        scanf("%d", &a.anio);
+        
+        // ---- PARA CARGAR LOS DATOS AL ARCHIVO
+        fseek(arc, 0, 2); => --- Mueve el puntero al final (0 desplaza cantidad de bytes desde el final, 0 posiciona el puntero al principio, 2 al final)
+        fwrite(&a, sizeof(a), 1, arc);
+        fclose(arc);
+
+        // ---- PARA MOSTRAR LOS DATOS DEL ARCHIVO
+
+        fseek(arc, 0, 0);
+        fread(&a, sizeof(a), 1, arc);
+        while(!feof(arc)){ => ------------ MIENTRAS NO SEA EL FIN DE ARCHIVO
+            printf("Muestro las cosas (marca modelo y anio)");
+            fread(&a, sizeof(a), 1, arc);
+        }
+
+        return 0;
+    }
+*/
