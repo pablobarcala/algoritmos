@@ -91,7 +91,7 @@ void cargarContacto(contacto nuevoContacto, FILE *archivo){
 
 void mostrarContactos(contacto nuevoContacto, FILE *archivo){
     archivo = abrirArchivo();
-    int posicion = 0;
+    int posicion = 1;
 
     fseek(archivo, 0, 0);
     fread(&nuevoContacto, sizeof(nuevoContacto), 1, archivo);
@@ -103,6 +103,10 @@ void mostrarContactos(contacto nuevoContacto, FILE *archivo){
         printf("Numero: %s", nuevoContacto.numero);
         posicion++;
         fread(&nuevoContacto, sizeof(nuevoContacto), 1, archivo);
+    }
+
+    if(posicion == 1){
+        printf("\n~~~ NO HAY CONTACTOS ~~~\n");
     }
 
     fclose(archivo);
@@ -211,7 +215,9 @@ void editarContacto(FILE *archivo){
 
     archivo = abrirArchivo();
 
-    printf("\nSeleccione una opcion a eliminar: \n");
+    printf("\n-------------\n");
+    printf("\nSeleccione una opcion a editar: \n");
+    printf("\nESCRIBIR '0' PARA VOLVER\n\n");
     mostrarContactos(contacto, archivo);
     scanf("%d", &opcion);
     fflush(stdin);
@@ -219,7 +225,7 @@ void editarContacto(FILE *archivo){
     fseek(archivo, 0, 0);
     fread(&contacto, sizeof(contacto), 1, archivo);
     while(!feof(archivo)){
-        if(i == opcion){
+        if(i == opcion - 1){
             printf("-----------\n");
             printf("Escriba nuevo nombre: ");
             fgets(contacto.nombre, sizeof(contacto.nombre), stdin);
@@ -231,13 +237,17 @@ void editarContacto(FILE *archivo){
             fgets(contacto.numero, sizeof(contacto.numero), stdin);
             fflush(stdin);
 
-            fseek(archivo, opcion, SEEK_SET);
+            fseek(archivo, opcion - 1, SEEK_SET);
             
             fwrite(&contacto, sizeof(contacto), 1, archivo);
             break;
         }
         i++;
         fread(&contacto, sizeof(contacto), 1, archivo);
+    }
+
+    if(opcion == 0) {
+        printf("\nNo se edito ningun contacto\n");
     }
 
     fclose(archivo);
@@ -251,7 +261,9 @@ void eliminarContacto(FILE *archivo){
 
     archivo = abrirArchivo();
 
+    printf("\n-------------\n");
     printf("\nSeleccione una opcion a eliminar: \n");
+    printf("\nESCRIBIR '0' PARA VOLVER\n\n");
     mostrarContactos(contacto, archivo);
     scanf("%d", &opcion);
     fflush(stdin);
@@ -259,7 +271,7 @@ void eliminarContacto(FILE *archivo){
     fseek(archivo, 0, 0);
     fread(&contacto, sizeof(contacto), 1, archivo);
     while(!feof(archivo)){
-        if(i != opcion){
+        if(i != opcion - 1){
             fwrite(&contacto, sizeof(contacto), 1, temp);
         }
         i++;
@@ -272,5 +284,10 @@ void eliminarContacto(FILE *archivo){
     remove("archivos/contactos.dat");
     rename("archivos/temp.dat", "archivos/contactos.dat");
 
-    printf("\nContacto eliminado correctamente\n");
+    if((opcion - 1) >= 0 && (opcion - 1) <= i) {
+        printf("\nContacto eliminado correctamente\n");
+    } else {
+        printf("\nNo se elimino ningun contacto\n");
+    }
+
 }
