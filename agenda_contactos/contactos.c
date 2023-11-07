@@ -8,17 +8,15 @@ typedef struct {
     char numero[20];
 } contacto;
 
-void cargarContacto(contacto nuevoContacto, FILE *archivo);
-void mostrarContactos(contacto nuevoContacto, FILE *archivo);
-void buscarContacto(FILE *archivo);
-void opcionesOrdenar(FILE *archivo);
-void ordenarContactos(FILE *archivo, int opcion);
-void editarContacto(FILE *archivo);
-void eliminarContacto(FILE *archivo);
+void cargarContacto();
+void mostrarContactos();
+void buscarContacto();
+void opcionesOrdenar();
+void ordenarContactos(int opcion);
+void editarContacto();
+void eliminarContacto();
 
 int main(){
-    contacto nuevoContacto;
-    FILE *archivo;
     int opcion;
 
     do { 
@@ -36,22 +34,22 @@ int main(){
 
         switch(opcion){
             case 1:
-                cargarContacto(nuevoContacto, archivo);
+                cargarContacto();
                 break;
             case 2:
-                mostrarContactos(nuevoContacto, archivo);
+                mostrarContactos();
                 break;
             case 3:
-                buscarContacto(archivo);
+                buscarContacto();
                 break;
             case 4:
-                opcionesOrdenar(archivo);
+                opcionesOrdenar();
                 break;
             case 5:
-                editarContacto(archivo);
+                editarContacto();
                 break;
             case 6:
-                eliminarContacto(archivo);
+                eliminarContacto();
                 break;
         }
     } while (opcion != 7);
@@ -62,16 +60,17 @@ int main(){
 FILE* abrirArchivo(){
     FILE *archivo;
 
-    archivo = fopen("C:/algoritmos/ejercicio/archivos/contactos.dat", "rb+");
+    archivo = fopen("C:/algoritmos/agenda_contactos/archivos/contactos.dat", "rb+");
     if(archivo == NULL){
-        archivo = fopen("C:/algoritmos/ejercicio/archivos/contactos.dat", "wb+");
+        archivo = fopen("C:/algoritmos/agenda_contactos/archivos/contactos.dat", "wb+");
     }
 
     return archivo;
 }
 
-void cargarContacto(contacto nuevoContacto, FILE *archivo){
-    archivo = abrirArchivo();
+void cargarContacto(){
+    FILE *archivo = abrirArchivo();
+    contacto nuevoContacto;
 
     printf("--------------\n");
     printf("Ingrese el nombre: ");
@@ -89,20 +88,21 @@ void cargarContacto(contacto nuevoContacto, FILE *archivo){
     fclose(archivo);
 }
 
-void mostrarContactos(contacto nuevoContacto, FILE *archivo){
-    archivo = abrirArchivo();
+void mostrarContactos(){
+    FILE *archivo = abrirArchivo();
+    contacto contacto;
     int posicion = 1;
 
     fseek(archivo, 0, 0);
-    fread(&nuevoContacto, sizeof(nuevoContacto), 1, archivo);
+    fread(&contacto, sizeof(contacto), 1, archivo);
     while(!feof(archivo)){
         printf("--------------\n");
         printf("CONTACTO %d:\n", posicion);
-        printf("Nombre: %s", nuevoContacto.nombre);
-        printf("Apellido: %s", nuevoContacto.apellido);
-        printf("Numero: %s", nuevoContacto.numero);
+        printf("Nombre: %s", contacto.nombre);
+        printf("Apellido: %s", contacto.apellido);
+        printf("Numero: %s", contacto.numero);
         posicion++;
-        fread(&nuevoContacto, sizeof(nuevoContacto), 1, archivo);
+        fread(&contacto, sizeof(contacto), 1, archivo);
     }
 
     if(posicion == 1){
@@ -112,12 +112,11 @@ void mostrarContactos(contacto nuevoContacto, FILE *archivo){
     fclose(archivo);
 }
 
-void buscarContacto(FILE *archivo){
+void buscarContacto(){
+    FILE *archivo = abrirArchivo();
     contacto contacto;
     char apellido[20];
     int encontrado = 0;
-
-    archivo = abrirArchivo();
 
     printf("Ingrese el apellido a buscar: ");
     fgets(apellido, sizeof(apellido), stdin);
@@ -144,7 +143,7 @@ void buscarContacto(FILE *archivo){
     fclose(archivo);
 }
 
-void opcionesOrdenar(FILE *archivo){
+void opcionesOrdenar(){
     int opcion;
 
     do {
@@ -156,15 +155,14 @@ void opcionesOrdenar(FILE *archivo){
             printf("Seleccione una opcion correcta.\n");
         }
 
-        ordenarContactos(archivo, opcion);
+        ordenarContactos(opcion);
     } while(opcion != 3);
 }
 
-void ordenarContactos(FILE *archivo, int opcion){
+void ordenarContactos(int opcion){
+    FILE *archivo = abrirArchivo();
     contacto contacto, temp, contactosOrdenados[20];
     int n = 0;
-
-    archivo = abrirArchivo();
 
     fseek(archivo, 0, 0);
     fread(&contacto, sizeof(contacto), 1, archivo);
@@ -199,21 +197,22 @@ void ordenarContactos(FILE *archivo, int opcion){
             break;
     }
 
-    for(int i = 0; i < n; i++){
-        printf("--------------\n");
-        printf("Nombre: %s", contactosOrdenados[i].nombre);
-        printf("Apellido: %s", contactosOrdenados[i].apellido);
-        printf("Telefono: %s", contactosOrdenados[i].numero);
+    if(opcion < 3) {
+        for(int i = 0; i < n; i++){
+            printf("--------------\n");
+            printf("Nombre: %s", contactosOrdenados[i].nombre);
+            printf("Apellido: %s", contactosOrdenados[i].apellido);
+            printf("Telefono: %s", contactosOrdenados[i].numero);
+        }
     }
 
     fclose(archivo);
 }
 
-void editarContacto(FILE *archivo){
+void editarContacto(){
+    FILE *archivo = abrirArchivo();
     contacto contacto;
     int opcion, i = 0;
-
-    archivo = abrirArchivo();
 
     printf("\n-------------\n");
     printf("\nSeleccione una opcion a editar: \n");
@@ -253,13 +252,12 @@ void editarContacto(FILE *archivo){
     fclose(archivo);
 }
 
-void eliminarContacto(FILE *archivo){
+void eliminarContacto(){
+    FILE *archivo = abrirArchivo();
     FILE *temp = fopen("archivos/temp.dat", "wb+");
 
     contacto contacto;
     int opcion, i = 0;
-
-    archivo = abrirArchivo();
 
     printf("\n-------------\n");
     printf("\nSeleccione una opcion a eliminar: \n");
@@ -289,5 +287,4 @@ void eliminarContacto(FILE *archivo){
     } else {
         printf("\nNo se elimino ningun contacto\n");
     }
-
 }
